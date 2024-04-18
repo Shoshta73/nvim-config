@@ -10,43 +10,45 @@ local utils = require("user.utils")
 
 local M = {}
 
-local TERM = os.getenv("TERM")
-
 -- Normal --
 -- Disable Space bar since it'll be used as the leader key
 -- nnoremap("<space>", "<nop>")
-
 nnoremap("<leader>t", function()
     vim.cmd("split")
     vim.cmd("terminal")
 end)
+
+nnoremap("<leader>tz", ":ZenMode<CR>")
+
+vim.keymap.set("n", "<leader>tt", function() require("trouble").toggle() end)
 
 nnoremap("<leader>nt", ":tabnew<CR>")
 nnoremap("<leader>tn", ":tabnext<CR>")
 nnoremap("<leader>tp", ":tabprevious<CR>")
 
 -- Window +  better kitty navigation
-nnoremap("<C-j>", function()
-    vim.cmd.wincmd("j")
-end)
-
-nnoremap("<C-k>", function()
-    vim.cmd.wincmd("k")
-end)
-
-nnoremap("<C-l>", function()
-    vim.cmd.wincmd("l")
-end)
-
-nnoremap("<C-h>", function()
-    vim.cmd.wincmd("h")
-end)
+-- nnoremap("<C-j>", function()
+--     vim.cmd.wincmd("j")
+-- end)
+--
+-- nnoremap("<C-k>", function()
+--     vim.cmd.wincmd("k")
+-- end)
+--
+-- nnoremap("<C-l>", function()
+--     vim.cmd.wincmd("l")
+-- end)
+--
+-- nnoremap("<C-h>", function()
+--     vim.cmd.wincmd("h")
+-- end)
 
 -- Swap between last two buffers
 nnoremap("<leader>'", "<C-^>", { desc = "Switch to last buffer" })
 
 -- Save with leader key
 nnoremap("<leader>w", "<cmd>w<cr>", { silent = false })
+nnoremap("<leader>a", "<cmd>wa<cr>", { silent = false })
 
 -- Quit with leader key
 nnoremap("<leader>q", "<cmd>q<cr>", { silent = false })
@@ -83,7 +85,7 @@ nnoremap("U", "<C-r>")
 
 -- Turn off highlighted results
 nnoremap("<leader>no", "<cmd>noh<cr>")
-
+vim.keymap.set("n", "<Esc>", "<cmd>noh<cr>")
 -- Diagnostics
 
 -- Goto next diagnostic of any severity
@@ -154,11 +156,20 @@ nnoremap("<leader>co", ":copen<cr>zz")
 -- Close the qflist
 nnoremap("<leader>cc", ":cclose<cr>zz")
 
--- Map MaximizerToggle (szw/vim-maximizer) to leader-m
-nnoremap("<leader>m", ":MaximizerToggle<cr>")
-
 -- Resize split windows to be equal size
 nnoremap("<leader>=", "<C-w>=")
+-- Resize windows horizontally
+-- Increase window width by 2 columns
+vim.api.nvim_set_keymap('n', '<C-w>l', ':vertical resize +5<CR>', { noremap = true, silent = true })
+-- Decrease window width by 2 columns
+vim.api.nvim_set_keymap('n', '<C-w>h', ':vertical resize -5<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-w>=', ':vertical resize<CR>', { noremap = true, silent = true })
+
+-- Resize windows vertically
+vim.api.nvim_set_keymap('n', '<C-w>j', ':resize +5<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-w>k', ':resize -5<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-w>+', ':resize +5<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-w>-', ':resize -5<CR>', { noremap = true, silent = true })
 
 -- Press leader f to format
 nnoremap("<leader>f", function()
@@ -166,10 +177,10 @@ nnoremap("<leader>f", function()
 end, { desc = "Format the current buffer" })
 
 -- Press leader rw to rotate open windows
-nnoremap("<leader>rw", ":RotateWindows<cr>", { desc = "[R]otate [W]indows" })
-
--- Press gx to open the link under the cursor
-nnoremap("gx", ":sil !open <cWORD><cr>", { silent = true })
+-- nnoremap("<leader>rw", ":RotateWindows<cr>", { desc = "[R]otate [W]indows" })
+--
+-- -- Press gx to open the link under the cursor
+-- nnoremap("gx", ":sil !open <cWORD><cr>", { silent = true })
 
 -- TSC autocommand keybind to run TypeScripts tsc
 -- Harpoon keybinds --
@@ -219,14 +230,6 @@ nnoremap("<leader>hn", function()
 end)
 
 nnoremap("<leader>hp", function()
-    harpoon_ui.nav_prev()
-end)
-
-nnoremap("<leader>n", function()
-    harpoon_ui.nav_next()
-end)
-
-nnoremap("<leader>p", function()
     harpoon_ui.nav_prev()
 end)
 
@@ -314,7 +317,8 @@ M.map_lsp_keybinds = function(buffer_number)
     -- See `:help K` for why this keymap
     nnoremap("K", vim.lsp.buf.hover, { desc = "LSP: Hover Documentation", buffer = buffer_number })
     nnoremap("<leader>k", vim.lsp.buf.signature_help, { desc = "LSP: Signature Documentation", buffer = buffer_number })
-    -- inoremap("<C-k>", vim.lsp.buf.signature_help, { desc = "LSP: Signature Documentation", buffer = buffer_number })
+    nnoremap("<leader>dh", vim.lsp.buf.hover, { desc = "LSP: Hover Documentation", buffer = buffer_number })
+    inoremap("<C-k>", vim.lsp.buf.signature_help, { desc = "LSP: Signature Documentation", buffer = buffer_number })
 
     -- Lesser used LSP functionality
     nnoremap("gD", vim.lsp.buf.declaration, { desc = "LSP: [G]oto [D]eclaration", buffer = buffer_number })
@@ -337,7 +341,7 @@ inoremap("jj", "<esc>")
 
 -- Visual --
 -- Disable Space bar since it'll be used as the leader key
-vnoremap("<space>", "<nop>")
+-- vnoremap("<space>", "<nop>")
 
 -- Press 'H', 'L' to jump to start/end of a line (first/last char)
 vnoremap("L", "$<left>")
@@ -367,10 +371,10 @@ tnoremap("<esc>", [[<C-\><C-n>]])
 tnoremap("jj", [[<C-\><C-n>]])
 
 -- Window navigation from terminal
-tnoremap("<C-h>", [[<Cmd>wincmd h<CR>]])
-tnoremap("<C-j>", [[<Cmd>wincmd j<CR>]])
-tnoremap("<C-k>", [[<Cmd>wincmd k<CR>]])
-tnoremap("<C-l>", [[<Cmd>wincmd l<CR>]])
+-- tnoremap("<C-h>", [[<Cmd>wincmd h<CR>]])
+-- tnoremap("<C-j>", [[<Cmd>wincmd j<CR>]])
+-- tnoremap("<C-k>", [[<Cmd>wincmd k<CR>]])
+-- tnoremap("<C-l>", [[<Cmd>wincmd l<CR>]])
 
 nnoremap("<A-k>", ":m-2<CR>")
 nnoremap("<A-j>", ":m+1<CR>")

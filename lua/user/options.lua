@@ -6,10 +6,10 @@ vim.opt.rnu = true
 vim.opt.showmode = false
 
 -- Set tabs to 2 spaces
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.expandtab = true
-
+-- vim.opt.tabstop = 4
+-- vim.opt.softtabstop = 4
+-- vim.opt.expandtab = true
+--
 -- Enable auto indenting and set it to spaces
 vim.opt.smartindent = true
 vim.opt.shiftwidth = 4
@@ -22,7 +22,7 @@ vim.opt.incsearch = true
 vim.opt.hlsearch = true
 
 -- Disable text wrap
-vim.opt.wrap = false
+vim.opt.wrap = true
 
 -- Set leader key to space
 vim.g.mapleader = " "
@@ -75,10 +75,13 @@ vim.opt.scrolloff = 8
 --vim.opt.colorcolumn = "80"
 
 vim.opt.guicursor = {
-  "n-v-c:block",                                  -- Normal, visual, command-line: block cursor
-  "i-ci-ve:ver25",                                -- Insert, command-line insert, visual-exclude: vertical bar cursor with 25% width
-  "r-cr:hor20",                                   -- Replace, command-line replace: horizontal bar cursor with 20% height
-  "o:hor50",                                      -- Operator-pending: horizontal bar cursor with 50% height
-  "a:blinkwait700-blinkoff400-blinkon250",        -- All modes: blinking settings
-  "sm:block-blinkwait175-blinkoff150-blinkon175", -- Showmatch: block cursor with specific blinking settings
+    "n-v-c:block",                                  -- Normal, visual, command-line: block cursor
+    "i-ci-ve:ver25",                                -- Insert, command-line insert, visual-exclude: vertical bar cursor with 25% width
+    "r-cr:hor20",                                   -- Replace, command-line replace: horizontal bar cursor with 20% height
+    "o:hor50",                                      -- Operator-pending: horizontal bar cursor with 50% height
+    "a:blinkwait700-blinkoff400-blinkon250",        -- All modes: blinking settings
+    "sm:block-blinkwait175-blinkoff150-blinkon175", -- Showmatch: block cursor with specific blinking settings
 }
+
+vim.opt.list = true
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
