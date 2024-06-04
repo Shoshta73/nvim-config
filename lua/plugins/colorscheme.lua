@@ -1,9 +1,11 @@
 return {
 	{
-		"catppuccin/nvim",
-    name = "catppuchin",
+		"Mofiqul/vscode.nvim",
+		-- "catppuccin/nvim",
+		name = "vscode",
 		config = function()
-			require("catppuccin").setup({
+			-- require("catppuccin").setup({
+			require("vscode").setup({
 				integrations = {
 					cmp = true,
 					fidget = true,
@@ -25,7 +27,8 @@ return {
 				},
 			})
 
-			vim.cmd.colorscheme("catppuccin-mocha")
+			-- vim.cmd.colorscheme("catppuccin-mocha")
+			vim.cmd.colorscheme("vscode")
 
 			-- Hide all semantic highlights until upstream issues are resolved (https://github.com/catppuccin/nvim/issues/480)
 			for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
